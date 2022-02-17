@@ -1,0 +1,67 @@
+n = int(input('Укажите конечную точку: ')) #конечная точка
+
+f = [0]*(n+1)
+maps = [0]*(n+1)
+
+for i in range(n):
+   f[i] = 0
+
+print(f)
+
+for i in range(n+1):
+   maps[i] = int(input())
+
+print(maps)
+
+f[0] = 1
+f[1] = f[0]
+f[2] = f[0] + f[1]
+f[3] = f[0] + f[1] + f[2]
+
+for i in range(1, n+1):
+       f[i] = maps[i] * (f[i-1] + f[i-2] + f[i-3] + f[i-4])
+
+print(f[n])
+
+file = open('input3.txt', 'r+')
+n = file.readline() #конечная точка
+m = file.readline() #количество (!) лягушек
+
+if n and m:
+   n = int(n)
+   m = int(m)
+
+   if (n > 0) and (m>=0):
+
+       BAD_CELLS = [0] * m
+
+       for j in range(m):
+           BAD_CELLS[j] = int(file.readline()) #формируем массив из плохих лягушек
+
+       dp = [0] * (n + 1)
+       is_bad = [0] * (n + 1)
+
+       for bad in BAD_CELLS: #формируем массив из 0 и 1, где 1  - лягушки.
+           is_bad[bad] = 1
+       print(is_bad)
+
+       if not is_bad[1]:
+           dp[1] = 1 # если вдруг у нас один из начальных элементов запрещен
+       else:
+           dp[2] = 1
+
+       for i in range(2, n + 1):
+           if not is_bad[i]:
+               for k in range(1, 5): #потому что на 4 шага может перемещаться
+                   if i - k >= 1:
+                       dp[i] += dp[i - k]
+                       m = dp[i]  # запомнила последний элемент - т.е. общее количество путей.
+       print(dp)
+
+       file.write('\nКоличество безопасных путей для кузнечика = {}'.format(m))
+   else:
+       file.write('\nВы ввели некорректное значение n.')
+else:
+   file.write('Пустой файл.')
+
+file.close()
