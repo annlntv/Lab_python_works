@@ -1,0 +1,21 @@
+def paths(f, n):
+  f[0] = 1
+  f[1] = f[0]
+  f[2] = f[1] + f[0]
+  for i in range(3, n + 1):
+      f[i] = f[i - 3] + f[i - 2] + f[i - 1]
+  return f[n]
+
+file = open('input3.txt', 'r+')
+n = file.readline()
+if n:
+   n = int(n)
+   if n>0:
+       f = [0]*(n+1)
+       for i in range(n):
+         f[i] = 0
+       file.write('Количество путей до точки n = {} равно {}.'.format(n, paths(f, n)))
+   else: file.write('Вы ввели неверное значение n.')
+else: file.write('Пустой файл.')
+
+file.close()
