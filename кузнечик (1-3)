@@ -11,10 +11,12 @@ n = file.readline()
 if n:
    n = int(n)
    if n>0:
-       f = [0]*(n+1)
-       for i in range(n):
-         f[i] = 0
-       file.write('Количество путей до точки n = {} равно {}.'.format(n, paths(f, n)))
+       if n != 1:
+           f = [0]*(n+1)
+           for i in range(n):
+             f[i] = 0
+           file.write('\nКоличество путей до точки n = {} равно {}.'.format(n, paths(f, n)))
+       else: file.write('Количество путей = 1.')
    else: file.write('Вы ввели неверное значение n.')
 else: file.write('Пустой файл.')
 
